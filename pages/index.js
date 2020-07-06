@@ -17,4 +17,6 @@ Home.getInitialProps = async () => {
   // note: these object will be merge with existing props
 }
 
+
+
 export default Home;
