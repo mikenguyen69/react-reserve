@@ -1,12 +1,21 @@
 import Product from '../../models/Product';
+import connectDb from '../../utils/connectDb';
+
+connectDb();
 
 export default async (req, res) => {
+
+    console.log(req.method);
+
     switch(req.method) {
         case "GET": 
             await handleGetRequest(req, res);
             break;
         case "DELETE": 
             await handleDeleteRequest(req, res);
+            break;
+        case "POST": 
+            await handlePostRequest(req, res);
             break;
         default: 
             res.status(405).send(`Method ${req.method} not allowed`);
@@ -24,4 +33,22 @@ async function handleDeleteRequest(req, res) {
     const { _id } = req.query;
     await Product.findOneAndDelete({ _id })
     res.status(204).json({});
+}
+
+async function handlePostRequest(req, res) {
+    const {name, price, description, mediaUrl } = req.body
+    if (!name || !price || !description || !mediaUrl) {
+        return res.status(422).send("Product missing one or more fields")
+    }
+
+    console.log("processing", req.body);
+
+    const product = await new Product({
+        name, 
+        price,
+        description,
+        mediaUrl
+    }).save();
+
+    res.status(201).json(product)
 }
