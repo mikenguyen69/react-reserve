@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { Form, Input, TextArea, Button, Image, Message, Header, Icon  } from 'semantic-ui-react';
 import baseUrl from '../utils/baseUrl';
+import catchErrors from '../utils/catchErrors';
 
 const INTIAL_PRODUCT = {
   name: "",
@@ -15,6 +16,15 @@ function CreateProduct() {
   const [mediaPreview, setMediaPreview] = React.useState("");
   const [success, setSuccess] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const [disabled, setDisabled] = React.useState(false);
+  const [error, setError] = React.useState("");
+
+  React.useEffect(() => {
+    const isProduct = Object.values(product).every(el => Boolean(el));
+
+    isProduct ? setDisabled(false) : setDisabled(true)
+
+  },[product])
 
   function handleChange(event) {
     const {name, value, files} = event.target;
@@ -27,21 +37,27 @@ function CreateProduct() {
   }
 
   async function handleSubmit(event) {
-    event.preventDefault();
-    setLoading(true);
-    const mediaUrl = await handleImageUpload();
-    console.log({ mediaUrl});
-    const url = `${baseUrl}/api/product`;
-    const {name, price, description} = product;
-    const payload = { name, price, description, mediaUrl };
-    console.log(payload);
+    try {
+      event.preventDefault();
+      setLoading(true);
+      const mediaUrl = await handleImageUpload();
+      
+      const url = `${baseUrl}/api/product`;
+      const { name, price, description} = product;
+      const payload = { name, price, description, mediaUrl };    
 
-    const createdProduct = await axios.post(url, payload);
-    
-    console.log(createdProduct);
-    setProduct(INTIAL_PRODUCT);
-    setSuccess(true);
-    setLoading(false);
+      const createdProduct = await axios.post(url, payload);
+      
+      console.log(createdProduct);
+      setProduct(INTIAL_PRODUCT);
+      setSuccess(true);
+    }
+    catch(err) {
+      catchErrors(err, setError);
+    } finally {
+      setLoading(false);
+    }
+
   }
 
   async function handleImageUpload() {
@@ -60,7 +76,12 @@ function CreateProduct() {
         <Icon name="add" color="orange" />
         Create New Product
       </Header>
-      <Form loading={loading} success={success} onSubmit={handleSubmit}>
+      <Form loading={loading} success={success} error={Boolean(error)} onSubmit={handleSubmit}>
+        <Message
+          error
+          header="Opps!"
+          content={error}
+        />
         <Message 
           success
           icon="check"
@@ -112,7 +133,7 @@ function CreateProduct() {
 
         <Form.Field 
           control={Button}
-          disabled={loading}
+          disabled={disabled}
           color="blue"
           icon="pencil alternate"
           content="Submit"

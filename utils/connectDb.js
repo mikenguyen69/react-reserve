@@ -16,9 +16,9 @@ async function connectDb() {
         useUnifiedTopology: true
     });
 
-    console.log("DB connected");
+    console.log("DB connected", db.connection._readyState);
 
-    connection.isConnected = db.connection[0].readyState;
+    connection.isConnected = db.connection._readyState;
 }
 
 export default connectDb;
