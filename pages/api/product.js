@@ -42,8 +42,6 @@ async function handlePostRequest(req, res) {
             return res.status(422).send("Product missing one or more fields")
         }
 
-        console.log("processing", req.body);
-
         const product = await new Product({
             name, 
             price,

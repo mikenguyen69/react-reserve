@@ -9,7 +9,9 @@ export default async (req, res) => {
     const { name, email, password } = req.body
     try {
         // 1) check if the user exists in DB 
-        const user = User.findOne({ email })
+        const user  = await User.findOne({ email })
+        
+        console.log(user)
 
         if (user) {
             return res.status(422).send(`User already exists with email ${email}`)
