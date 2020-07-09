@@ -7,7 +7,7 @@ export default function catchErrors(error, displayError) {
     }
     else if (error.request) {
         // The request was made but no response was received
-        errorMsg = err.request;
+        errorMsg = error.request;
         console.error("Error Request", errorMsg);
     }
     else {
