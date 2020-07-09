@@ -4,10 +4,10 @@ import { Container } from "semantic-ui-react";
 import Header from "./Header";
 import HeadContent from "./HeadContent";
 
-function Layout({ children }) {
+function Layout({ children, user }) {
   return (
     <>
-      <Head>
+      <Head user={user}>
         <HeadContent />
         {/* Stylesheets */}
         <link rel="stylesheet" type="text/css" href="/static/styles.css" />
