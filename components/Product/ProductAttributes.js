@@ -7,10 +7,14 @@ import {useRouter} from 'next/router';
 function ProductAttributes({ description, _id , user}) {
   const [modal, setModal] = React.useState(false)
   const router = useRouter();
-  const isRoot = user.role === 'root';
-  const isAdmin = user.role === 'admin';
-  const isRootOrAdmin = isRoot || isAdmin;
-
+  
+  var isRootOrAdmin = false; 
+  if (user) {
+    const isRoot = user.role === 'root';
+    const isAdmin = user.role === 'admin';
+    isRootOrAdmin = isRoot || isAdmin;
+  }
+  
   async function handleDelete() {
     const url = `${baseUrl}/api/product`;
     const payload = {params: { _id }}
