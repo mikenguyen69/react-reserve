@@ -4,12 +4,15 @@ import { useRouter } from 'next/router';
 import NProgress from 'nprogress';
 import { handleLogout } from '../../utils/auth';
 
-function Header(user) {
-  console.log(user)
+function Header({user}) {
   const router = useRouter();
-  const isRoot = user.role === 'root';
-  const isAdmin = user.role === 'admin';
-  const isRootOrAdmin = isRoot || isAdmin;
+
+  var isRootOrAdmin = false;
+  if (user) {
+    const isRoot = user.role === 'root';
+    const isAdmin = user.role === 'admin';
+    isRootOrAdmin = isRoot || isAdmin;
+  }
   
   router.onRouteChangeStart = () => NProgress.start();
   router.OnRouteChangeComplete = () => NProgress.done();
@@ -49,6 +52,7 @@ function Header(user) {
             <Icon 
               name="add square" 
               size="large" 
+
             />
             Create
           </Menu.Item>

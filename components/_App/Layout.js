@@ -7,7 +7,7 @@ import HeadContent from "./HeadContent";
 function Layout({ children, user }) {
   return (
     <>
-      <Head user={user}>
+      <Head>
         <HeadContent />
         {/* Stylesheets */}
         <link rel="stylesheet" type="text/css" href="/static/styles.css" />
@@ -18,7 +18,7 @@ function Layout({ children, user }) {
         />
         <title>ReactReserve</title>
       </Head>
-      <Header />
+      <Header user={user} />
       <Container text style={{ paddingTop: "1em" }}>
         {children}
       </Container>
