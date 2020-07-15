@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken'
 import Cart from '../../models/Cart'
 import connectDb from '../../utils/connectDb'
 import mongoose from 'mongoose'
+import Product from '../../models/Product'
 
 connectDb()
 
@@ -15,6 +16,10 @@ export default async(req, res) => {
 
         case "PUT": 
             await handlePutRequest(req, res);
+            break;
+
+        case "DELETE":
+            await handleDeleteRequest(req, res);
             break;
         
         default: 
@@ -35,9 +40,9 @@ async function handleGetRequest(req, res) {
         const { userId } = jwt.verify(req.headers.authorization, process.env.JWT_SECRET)
 
         const cart = await Cart.findOne({user: userId}).populate({
-            path: 'products', 
-            populate: { path: 'products' }
-        })
+            path: "products.product", 
+            model: Product
+        });
 
         res.status(200).json(cart.products)
     }
@@ -75,6 +80,39 @@ async function handlePutRequest(req, res) {
         }
 
         res.status(200).send("Cart updated");
+    }
+    catch(error) {
+        console.error(error);
+        res.status(403).send("Please login again")
+    }
+}
+
+async function handleDeleteRequest(req, res) {
+    if (!('authorization' in req.headers)) {
+        return res.status(401).send("No authorization token");
+    }
+    
+    console.log(req.body);
+    
+    const { productId }  = req.query;
+
+    try {
+        const { userId } = jwt.verify( req.headers.authorization, process.env.JWT_SECRET )
+
+        //console.log(userId);
+
+        const cart = await Cart.findOneAndUpdate(
+            { user: userId },
+            {$pull: { products: { product: productId }}},
+            { new: true}
+        ).populate({
+            path: "products.product",
+            model: Product
+        })
+
+        console.log(cart);
+        
+        res.status(200).json( cart.products );
     }
     catch(error) {
         console.error(error);
