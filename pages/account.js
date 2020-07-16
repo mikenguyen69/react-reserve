@@ -1,10 +1,10 @@
 import AccountHeader from '../components/Account/AccountHeader'
 import AccountOrders from '../components/Account/AccountOrders'
-import {parseCookie} from 'js-cookie'
-import baseUrl from '../utils/baseUrl'
+import { parseCookies } from 'nookies'
 import axios from 'axios'
+import baseUrl from '../utils/baseUrl'
 
-function Account({user, orders}) {
+function Account({ user, orders }) {
   console.log(orders);
   return <>
     <AccountHeader {...user}/>
@@ -13,19 +13,17 @@ function Account({user, orders}) {
 }
 
 Account.getInitialProps = async ctx => {
-  // const { token } = parseCookie(ctx)
-  // if (!token) {
-  //   return { orders: []}
-  // }
+  const { token } = parseCookies(ctx)
+  if (!token) {
+    return { orders: []}
+  }
 
-  // console.log(token);
+  console.log(token);
 
-  // const payload = { headers: { Authorization: token }}
-  // const url = `${baseUrl}/api/orders`
-  // const response = await axios.get(url, payload)
-  // return response.data
-
-  return { orders: []}
+  const payload = { headers: { Authorization: token }}
+  const url = `${baseUrl}/api/orders`
+  const response = await axios.get(url, payload)
+  return response.data
 }
 
 export default Account;

@@ -1,12 +1,10 @@
 import { Header, Accordion, Label, Segment, Icon, Button, List, Image} from 'semantic-ui-react'
-import orders from '../../pages/api/orders'
 import { useRouter } from 'next/router'
 
-function AccountOrders() {
+function AccountOrders({ orders }) {
   const router = useRouter()
 
   function mapOrdersToPanels(orders) {
-    orders = [];
     return orders.map(order => ({
       key: order._id,
       title: {
@@ -54,7 +52,7 @@ function AccountOrders() {
       <Icon name="folder open" />
       Order History
     </Header>
-    {orders.length === 0} ? (
+    { orders.length === 0 ? (
       <Segment inverted tertiary color="grey" textAlign="center">
         <Header icon>
           <Icon name="copy outline" />
@@ -73,7 +71,7 @@ function AccountOrders() {
         exclusive={false}
         panels={mapOrdersToPanels(orders)}
       />
-    )
+    )}
   </>;
 }
 

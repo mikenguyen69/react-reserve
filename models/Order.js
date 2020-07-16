@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import Product from './Product';
 
 const { ObjectId, Number, String}  = mongoose.Schema.Types;
 
@@ -15,7 +16,7 @@ const OrderSchema = new mongoose.Schema({
             },
             product: {
                 type: ObjectId,
-                ref: "Product"
+                ref: Product
             }
         }
     ],
