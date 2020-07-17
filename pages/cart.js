@@ -20,7 +20,7 @@ function Cart({products, user}) {
       params: { productId },
       headers: { Authorization: token }
     }
-    console.log("ok here", payload);
+    
     const response = await axios.delete(url, payload);
     setCartProducts(response.data);
   }
@@ -63,7 +63,7 @@ Cart.getInitialProps = async ctx => {
     return { products: []};
   }
 
-  console.log(token)
+  
 
   const url = `${baseUrl}/api/cart`
   const payload = { headers: { Authorization: token}}

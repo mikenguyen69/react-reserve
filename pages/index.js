@@ -1,12 +1,12 @@
 import React from 'react';
 import axios from 'axios';
 import ProductList from '../components/Index/ProductList';
-import ProductPagination from '../components/index/ProductPagination';
+import ProductPagination from '../components/Index/ProductPagination';
 import baseUrl from '../utils/baseUrl';
 
 function Home({ products, totalPages }) {
   
-  console.log(totalPages);
+  
   return (
     <>
     <ProductList products={products} />
