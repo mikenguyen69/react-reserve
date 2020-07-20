@@ -1,6 +1,6 @@
 ## Starting Repo for MERN Stack - The Complete Guide
 
-###Setup now.json as following 
+### Setup now.json as following 
 ```json
 {
   "name": "vercel_app_deployment_name",
@@ -15,7 +15,7 @@
 }
 ```
 
-###setup configure file for next.config.js
+### Setup configure file for next.config.js
 ```json
 // must restart server whenever you make changes in next.config
 module.exports = {
