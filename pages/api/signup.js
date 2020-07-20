@@ -23,8 +23,6 @@ export default async (req, res) => {
 
         // 1) check if the user exists in DB 
         const user  = await User.findOne({ email })
-        
-        console.log(user)
 
         if (user) {
             return res.status(422).send(`User already exists with email ${email}`)
@@ -39,7 +37,6 @@ export default async (req, res) => {
             email,
             password: hash
         }).save()
-        console.log(newUser);
 
         // 4 Create cart for new user
         await new Cart( { user: newUser._id }).save()

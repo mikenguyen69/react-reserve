@@ -109,8 +109,6 @@ async function handleDeleteRequest(req, res) {
             path: "products.product",
             model: Product
         })
-
-        console.log(cart);
         
         res.status(200).json( cart.products );
     }

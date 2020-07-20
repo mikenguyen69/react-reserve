@@ -49,7 +49,6 @@ function CreateProduct() {
 
       const createdProduct = await axios.post(url, payload);
       
-      console.log(createdProduct);
       setProduct(INTIAL_PRODUCT);
       setSuccess(true);
     }

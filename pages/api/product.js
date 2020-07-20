@@ -6,8 +6,6 @@ connectDb();
 
 export default async (req, res) => {
 
-    console.log(req.method);
-
     switch(req.method) {
         case "GET": 
             await handleGetRequest(req, res);

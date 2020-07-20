@@ -6,7 +6,7 @@ import axios from 'axios'
 import baseUrl from '../utils/baseUrl'
 
 function Account({ user, orders }) {
-  console.log(orders);
+  
   return <>
     <AccountHeader {...user}/>
     <AccountOrders orders={orders} />
