@@ -13,6 +13,7 @@
     "STRIPE_SECRET_KEY": "STRIPE_SECRET_KEY"
   }
 }
+```
 
 ###setup configure file for next.config.js
 ```json
@@ -25,3 +26,4 @@ module.exports = {
     STRIPE_SECRET_KEY: "STRIPE_SECRET_KEY"
   }
 };
+```
